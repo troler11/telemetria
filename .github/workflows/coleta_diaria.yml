@@ -1,0 +1,37 @@
+name: Coleta Diaria ABM
+
+on:
+  schedule:
+    # Roda todo dia as 04:00 AM UTC (01:00 AM Brasil)
+    - cron: '0 4 * * *'
+  workflow_dispatch: # Permite rodar manualmente clicando num botão (pra testar)
+
+jobs:
+  executar-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Instalar dependências
+        run: |
+          pip install -r requirements.txt
+
+      - name: Rodar o Robô
+        env: # Aqui ele puxa as senhas que vamos configurar no site do GitHub
+          SB_HOST: ${{ secrets.SB_HOST }}
+          SB_DB: ${{ secrets.SB_DB }}
+          SB_USER: ${{ secrets.SB_USER }}
+          SB_PASS: ${{ secrets.SB_PASS }}
+          SB_PORT: ${{ secrets.SB_PORT }}
+          ABM_USER: ${{ secrets.ABM_USER }}
+          ABM_PASS: ${{ secrets.ABM_PASS }}
+          # Fuso horário para o Python saber que horas são no Brasil
+          TZ: 'America/Sao_Paulo'
+        run: python nome_do_seu_arquivo.py

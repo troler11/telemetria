@@ -25,13 +25,6 @@ jobs:
 
       - name: Rodar o Robô
         env: # Aqui ele puxa as senhas que vamos configurar no site do GitHub
-          SB_HOST: ${{ secrets.SB_HOST }}
-          SB_DB: ${{ secrets.SB_DB }}
-          SB_USER: ${{ secrets.SB_USER }}
-          SB_PASS: ${{ secrets.SB_PASS }}
-          SB_PORT: ${{ secrets.SB_PORT }}
-          ABM_USER: ${{ secrets.ABM_USER }}
-          ABM_PASS: ${{ secrets.ABM_PASS }}
           # Fuso horário para o Python saber que horas são no Brasil
           TZ: 'America/Sao_Paulo'
-        run: python nome_do_seu_arquivo.py
+        run: python index.py
